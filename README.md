@@ -12,6 +12,9 @@
 # 使用方法
 ## 1.一个root手机
 ## 2.安装Xposed Installer
+
+* [Xposed Installer](https://repo.xposed.info/module/de.robv.android.xposed.installer)
+
 ## 3.修改Dumper.java 文件将 your.package.name 替换为要dump的包名，并给该应用读写内存权限。
 ```
 if ("your.package.name".equals(loadPackageParam.processName)) {
