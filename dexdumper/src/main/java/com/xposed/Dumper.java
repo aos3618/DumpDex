@@ -3,7 +3,9 @@ package com.xposed;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -48,7 +50,12 @@ public class Dumper implements IXposedHookLoadPackage {
         d.duplicate();
         byte[] bytes = new byte[d.remaining()];
         d.get(bytes);
-        String path = Environment.getExternalStorageDirectory().getPath() + "/dump" + "/dump_" + processName + num + ".dex";
+
+        File dir = new File(Environment.getExternalStorageDirectory().getPath() + "/dump");
+        if (!dir.exists() || !dir.isDirectory()) {
+            dir.mkdir();
+        }
+        String path = dir.getAbsolutePath() + "/dump_" + processName + num + ".dex";
         Log.e("AoS ******", "Begin dump dex :" + path + "  size :" + bytes.length);
         writeByteToFile(bytes, path);
         Log.e("AoS ******", "Finished dump dex :" + path + "  size :" + bytes.length);
